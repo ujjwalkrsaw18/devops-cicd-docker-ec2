@@ -1,0 +1,6 @@
+services:
+  devopscicddockerec2:
+    image: devopscicddockerec2
+    build:
+      context: .
+      dockerfile: ./Dockerfile

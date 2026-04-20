@@ -1,0 +1,27 @@
+services:
+  backend:
+    image: ${DOCKERHUB_USERNAME}/devops-backend:latest
+    container_name: devops-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+    networks:
+      - app-network
+
+  frontend:
+    image: ${DOCKERHUB_USERNAME}/devops-frontend:latest
+    container_name: devops-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

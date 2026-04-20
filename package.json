@@ -1,0 +1,10 @@
+{
+  "name": "devops-cicd-docker-ec2",
+  "private": true,
+  "workspaces": ["frontend", "backend"],
+  "scripts": {
+    "install:all": "npm install --workspaces",
+    "dev": "echo Run frontend and backend separately",
+    "build": "npm run build --workspace frontend"
+  }
+}
