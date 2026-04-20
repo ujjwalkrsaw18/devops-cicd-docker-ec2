@@ -15,6 +15,12 @@ app.use(cors());
 // Parse incoming JSON requests
 app.use(express.json());
 
+// Serve static files from the built frontend (production)
+const frontendDistPath = path.join(__dirname, '../frontend/dist');
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+}
+
 // Simple in-memory storage for todos (persists during runtime)
 let todos = [];
 let nextId = 1;
@@ -99,6 +105,16 @@ app.delete('/api/todos/:id', (req, res) => {
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
+// Serve index.html for all non-API routes (client-side routing for SPA)
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, '../frontend/dist/index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.json({ message: 'API is running. Frontend not found.' });
+  }
 });
 
 // Listen on 0.0.0.0 to ensure it works properly inside a Docker container
