@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 
-// Use /api endpoint - the backend serves both API and frontend static files
-const apiUrl = '/api';
+// Use VITE_API_URL environment variable for production (Render), fallback to empty string for relative paths
+const apiUrl = import.meta.env.VITE_API_URL || '';
 
 export default function App() {
   const [todos, setTodos] = useState([]);
